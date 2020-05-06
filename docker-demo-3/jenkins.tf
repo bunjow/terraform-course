@@ -13,10 +13,14 @@ resource "aws_instance" "jenkins-instance" {
 
   # user data
   user_data = data.template_cloudinit_config.cloudinit-jenkins.rendered
+
+  # role:
+  iam_instance_profile = aws_iam_instance_profile.jenkins-role-docker.name
+
 }
 
 resource "aws_ebs_volume" "jenkins-data" {
-  availability_zone = "eu-west-1a"
+  availability_zone = "us-east-2a"
   size              = 20
   type              = "gp2"
   tags = {
